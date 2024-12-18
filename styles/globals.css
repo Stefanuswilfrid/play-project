@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-gamma: 36, 246, 99;
+    --color-starlight: 38, 135, 255;
+    --color-quasar: 252, 85, 255;
+    --color-eclipse: 0, 4, 55;
+  }
+
+  .gradient {
+    background: radial-gradient(
+        216% 106% at 6% 3%,
+        rgb(var(--color-gamma), 0.3) 0,
+        rgb(var(--color-starlight), 0.3) 52%,
+        rgb(var(--color-quasar), 0.3) 100%
+      ),
+      rgb(var(--color-eclipse));
+  }
+}
+
+@layer utilities {
+  .h-screen {
+    height: 100dvh;
+  }
+
+  .min-h-screen {
+    min-height: 100dvh;
+  }
+
+  .max-h-dialog {
+    max-height: calc(100vh + 0.5rem);
+    max-height: calc(100dvh + 0.5rem);
+  }
+}
+
+/* #region /**=========== Dialog =========== */
+
+/* Dialog Overlay */
+[data-dialog-overlay] {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (min-width: 448px) {
+  [data-dialog-overlay] {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+/* Dialog Content */
+
+[data-dialog-content] {
+  transition-property: opacity, transform, scale;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-dialog-state="initial"] {
+  opacity: var(--opacity-from, 0);
+  transform: translate(var(--x-from, -50%), var(--y-from)) scale(var(--scale-from, 1));
+}
+
+[data-dialog-content][data-dialog-state="animate"] {
+  transition-delay: 0.5s;
+}
+
+[data-dialog-state="animate"] {
+  opacity: var(--opacity-to, 1);
+  transform: translate(var(--x-from, -50%), var(--y-to)) scale(var(--scale-to, 1));
+  transition-duration: 0.3s;
+}
+
+[data-dialog-state="exit"] {
+  opacity: var(--opacity-from, 0);
+  transform: translate(var(--x-from, -50%), var(--y-from)) scale(var(--scale-from, 1));
+  transition-duration: 0.5s;
+}
+
+@media (min-width: 448px) {
+  [data-dialog-content] {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  [data-dialog-state="animate"] {
+    transition-duration: 0.3s;
+  }
+
+  [data-dialog-state="exit"] {
+    transition-duration: 0.2s;
+  }
+}
+
+/* #endregion /**=========== Dialog =========== */
